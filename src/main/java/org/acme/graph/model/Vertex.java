@@ -1,5 +1,8 @@
 package org.acme.graph.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.locationtech.jts.geom.Coordinate;
 
@@ -23,19 +26,15 @@ public class Vertex {
 	private Coordinate coordinate;
 
 	/**
-	 * dijkstra - coût pour atteindre le sommet
+	 * Liste des tronçons arrivants sur le vertex
 	 */
-	private double cost;
+	List<Edge> inEdges = new ArrayList<Edge>();
 	/**
-	 * dijkstra - arc entrant avec le meilleur coût
+	 * Liste des tronçon partant du vertex
 	 */
-	private Edge reachingEdge;
-	/**
-	 * dijkstra - indique si le sommet est visité
-	 */
-	private boolean visited;
+	List<Edge> outEdges = new ArrayList<Edge>();
 
-	public Vertex() {
+	Vertex() {
 
 	}
 
@@ -55,30 +54,22 @@ public class Vertex {
 		this.coordinate = coordinate;
 	}
 
-	@JsonIgnore
-	public double getCost() {
-		return cost;
-	}
-
-	public void setCost(double cost) {
-		this.cost = cost;
+	public void setInEdges(List<Edge> edges){
+		this.inEdges = edges;
 	}
 
 	@JsonIgnore
-	public Edge getReachingEdge() {
-		return reachingEdge;
+	public List<Edge> getInEdge(){
+		return this.inEdges;
 	}
 
-	public void setReachingEdge(Edge reachingEdge) {
-		this.reachingEdge = reachingEdge;
+	public void setOutEdges(List<Edge> edges){
+		this.outEdges = edges;
 	}
 
-	public boolean isVisited() {
-		return visited;
-	}
-
-	public void setVisited(boolean visited) {
-		this.visited = visited;
+	@JsonIgnore
+	public List<Edge> getOutEdge(){
+		return this.outEdges;
 	}
 
 	@Override

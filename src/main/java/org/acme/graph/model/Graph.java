@@ -35,15 +35,6 @@ public class Graph {
 	}
 
 	/**
-	 * Récupération de la liste arcs
-	 * 
-	 * @return
-	 */
-	public void setVertices(List<Vertex> vertices) {
-		this.vertices = vertices;
-	}
-
-	/**
 	 * Recherche d'un sommet par identifiant
 	 * 
 	 * @param id
@@ -105,20 +96,13 @@ public class Graph {
 	}
 
 	/**
-	 * Recherche des arcs sortant d'un sommet
+	 * Recherche des arcs entrants d'un sommet
 	 * 
 	 * @param vertex
 	 * @return
 	 */
 	public List<Edge> getInEdges(Vertex vertex) {
-		List<Edge> result = new ArrayList<>();
-		for (Edge candidate : edges) {
-			if (candidate.getTarget() != vertex) {
-				continue;
-			}
-			result.add(candidate);
-		}
-		return result;
+		return vertex.getInEdge();
 	}
 
 	/**
@@ -128,23 +112,38 @@ public class Graph {
 	 * @return
 	 */
 	public List<Edge> getOutEdges(Vertex vertex) {
-		List<Edge> result = new ArrayList<>();
-		for (Edge candidate : edges) {
-			if (candidate.getSource() != vertex) {
-				continue;
-			}
-			result.add(candidate);
-		}
-		return result;
+		return vertex.getOutEdge();
 	}
 
 	/**
-	 * Définition de la liste des arcs
+	 * Fabrique de Vertex
 	 * 
-	 * @param edges
+	 * @param coordinate
+	 * @param id
+	 * 
+	 * @return
 	 */
-	public void setEdges(List<Edge> edges) {
-		this.edges = edges;
+	public Vertex createVertex(Coordinate coordinate, String id){
+		Vertex vertex = new Vertex();
+		vertex.setCoordinate(coordinate);
+		vertex.setId(id);
+		this.vertices.add(vertex);
+		return vertex;
+	}
+
+	/**
+	 * Fabrique de Edge
+	 * 
+	 * @param source
+	 * @param target
+	 * @param id
+	 * @return
+	 */
+	public Edge createEdge(Vertex source, Vertex target, String id){
+		Edge edge = new Edge(source, target);
+		edge.setId(id);
+		this.edges.add(edge);
+		return edge;
 	}
 
 }
