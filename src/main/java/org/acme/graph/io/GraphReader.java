@@ -90,15 +90,17 @@ public class GraphReader {
 
 		/* Création de l'arc pour le parcours en sens direct */
 		if (sens.equals(DOUBLE_SENS) || sens.equals(SENS_DIRECT)) {
-			Edge directEdge = new Edge(source,target);
+			/*Edge directEdge = new Edge(source,target);
 			directEdge.setId(id + "-direct");
-			graph.getEdges().add(directEdge);
+			graph.getEdges().add(directEdge);*/
+			graph.createEdge(source, target, id + "-direct");
 		}
+		/* Création de l'arc pour le parcours en sens opposé */
 		if (sens.equals(DOUBLE_SENS) || sens.equals(SENS_INVERSE)) {
-			/* Création de l'arc pour le parcours en sens opposé */
-			Edge reverseEdge = new Edge(target,source);
+			/*Edge reverseEdge = new Edge(target,source);
 			reverseEdge.setId(id + "-reverse");
-			graph.getEdges().add(reverseEdge);
+			graph.getEdges().add(reverseEdge);*/
+			graph.createEdge(target, source, id + "-reverse");
 		}
 	}
 

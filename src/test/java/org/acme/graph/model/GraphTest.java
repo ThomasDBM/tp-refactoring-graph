@@ -13,6 +13,44 @@ import org.locationtech.jts.geom.Coordinate;
 
 public class GraphTest {
 
+	private final static double EPSILON = 1.0e-15;
+
+	@Test
+	public void testCreateVertex(){
+
+		Vertex d = new Vertex();
+		d.setId("d");
+		d.setCoordinate(new Coordinate(1.0, 1.0));
+
+		Graph graph = new Graph();
+		Vertex e = graph.createVertex(new Coordinate(1.0, 1.0), "d");
+
+		assertEquals(d.getId(), e.getId());
+		assertEquals(d.getCoordinate().x, e.getCoordinate().x, EPSILON);
+		assertEquals(d.getCoordinate().y, e.getCoordinate().y, EPSILON);
+	}
+
+	@Test
+	public void testCreateEdge(){
+		Vertex a = new Vertex();
+		a.setId("a");
+		a.setCoordinate(new Coordinate(1.0, 1.0));
+		Vertex b = new Vertex();
+		b.setId("b");
+		b.setCoordinate(new Coordinate(2.0, 2.0));
+
+		Graph graph = new Graph();
+		Edge ab = graph.createEdge(a, b, "ab");
+
+		assertEquals(a.getId(), ab.getSource().getId());
+		assertEquals(a.getCoordinate().x, ab.getSource().getCoordinate().x, EPSILON);
+		assertEquals(a.getCoordinate().y, ab.getSource().getCoordinate().y, EPSILON);
+
+		assertEquals(b.getId(), ab.getTarget().getId());
+		assertEquals(b.getCoordinate().x, ab.getTarget().getCoordinate().x, EPSILON);
+		assertEquals(b.getCoordinate().y, ab.getTarget().getCoordinate().y, EPSILON);
+	}
+
 	@Test
 	public void testFindVertexById() {
 		Vertex v = TestGraphFactory.createGraph01().findVertex("a");
