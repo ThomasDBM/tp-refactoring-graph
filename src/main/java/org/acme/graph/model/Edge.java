@@ -1,6 +1,7 @@
 package org.acme.graph.model;
 
 import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
 
@@ -32,6 +33,11 @@ public class Edge {
 	 * Sommet final
 	 */
 	private Vertex target;
+
+	/**
+	 * Geometrie du tronçon
+	 */
+	private LineString geometry ;
 
 	Edge(Vertex source, Vertex target){
 		this.source = source;
@@ -76,23 +82,31 @@ public class Edge {
 		this.target = target;
 	}
 
+	public void setGeometry(LineString geometry){
+		this.geometry= geometry;
+	}
+
 	/**
 	 * dijkstra - coût de parcours de l'arc (distance géométrique)
 	 * 
 	 * @return
 	 */
 	public double getCost() {
-		return source.getCoordinate().distance(target.getCoordinate());
+		return this.getGeometry().getLength();
 	}
 
 	@JsonSerialize(using = GeometrySerializer.class)
 	public LineString getGeometry() {
-		GeometryFactory gf = new GeometryFactory();
-		return gf.createLineString(new Coordinate[] {
-			source.getCoordinate(),
-			target.getCoordinate()
-		});
+		if (this.geometry == null){
+			GeometryFactory gf = new GeometryFactory();
+			this.geometry = gf.createLineString(new Coordinate[] {
+				source.getCoordinate(),
+				target.getCoordinate()
+			});
+		}
+		return this.geometry;
 	}
+
 
 	@Override
 	public String toString() {
