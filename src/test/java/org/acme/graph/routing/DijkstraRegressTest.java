@@ -3,10 +3,12 @@ package org.acme.graph.routing;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 
 import java.util.List;
 
 import org.acme.graph.TestGraphFactory;
+import org.acme.graph.errors.NotFoundException;
 import org.acme.graph.model.Edge;
 import org.acme.graph.model.Graph;
 import org.junit.Before;
@@ -37,10 +39,9 @@ public class DijkstraRegressTest {
 		assertEquals(1, path.size());
 	}
 
-	@Test
+	@Test (expected = NotFoundException.class)
 	public void testBANotFound() {
 		List<Edge> path = finder.findPath(graph.findVertex("b"), graph.findVertex("a"));
-		assertNull(path);
 	}
 
 	@Test
